@@ -1,0 +1,90 @@
+import java.util.*;
+import java.util.List;
+
+public class KNN {
+
+    private Data data;
+    private int k = 0;
+
+    private KNN(Data data, int k) {
+        this.data = data;
+        this.k = k;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public static void TestSetKNN(Data data, int k) {
+        KNN knn = new KNN(data, k);
+        for (Iris i : knn.getData().getTestData()) {
+            System.out.println( i.getName() + " " + knn.testKKN(i));
+        }
+    }
+
+    public static void TestArgumentKNN(Data data, Iris iris, int k) {
+        KNN irisKnn = new KNN(data, k);
+        System.out.println("Hiperparametr: " + iris + " -> " + irisKnn.testKKN(iris));
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    private String testKKN(Iris iris) {
+
+        List<Iris> closest = new ArrayList<>();
+        List<Double> distances = new ArrayList<>();
+        for (Iris j : data.getTrainData()) {
+            double tmp = distance(iris, j);
+
+            if (closest.size() >= k) {
+                int index = 0;
+                for (int l = 1; l < k; l++) {
+                    if (distances.get(index) < distances.get(l)) index = l;
+                }
+                if (distances.get(index) > tmp) {
+                    closest.set(index, j);
+                    distances.set(index, tmp);
+                }
+            } else {
+                closest.add(j);
+                distances.add(tmp);
+            }
+        }
+
+        Map<String, Integer> count = new HashMap<>();
+        closest.forEach(i ->
+        {
+            if (count.containsKey(i.getType().name())) count.replace(i.getType().name(), count.get(i.getType().name()) + 1);
+            else count.put(i.getType().name(), 1);
+        });
+
+        Map.Entry<String, Integer> maxEntry = null;
+        for (Map.Entry<String, Integer> entry : count.entrySet()) {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) maxEntry = entry;
+        }
+
+        double accuracy = 0.0;
+        String result = "";
+        if (maxEntry != null) {
+            accuracy = maxEntry.getValue().doubleValue()/k;
+            switch (maxEntry.getKey()) {
+                case "SETOSA" -> result = "Iris-setosa";
+                case "VERSICOLOR" -> result = "Iris-versicolour";
+                case "VIRGINICA" -> result = "Iris-virginica";
+            }
+        }
+        return result + " accurancy=" + accuracy;
+    }
+
+    private double distance(Iris x, Iris y) {
+        return Math.sqrt(
+                Math.pow(y.getPetalLength() - x.getPetalLength(), 2.0)
+                        + Math.pow(y.getPetalWidth() - x.getPetalWidth(), 2.0)
+                        + Math.pow(y.getSepalLength() - x.getSepalLength(), 2.0)
+                        + Math.pow(y.getSepalWidth() - x.getSepalWidth(), 2.0)
+        );
+    }
+
+}
