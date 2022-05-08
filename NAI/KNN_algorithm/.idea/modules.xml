@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NaiProjekt.iml" filepath="$PROJECT_DIR$/NaiProjekt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KNN_algorithm.iml" filepath="$PROJECT_DIR$/KNN_algorithm.iml" />
     </modules>
   </component>
 </project>
