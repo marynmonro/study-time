@@ -56,8 +56,8 @@ public class KNN {
         Map<String, Integer> count = new HashMap<>();
         closest.forEach(i ->
         {
-            if (count.containsKey(i.getType().name())) count.replace(i.getType().name(), count.get(i.getType().name()) + 1);
-            else count.put(i.getType().name(), 1);
+            if (count.containsKey(i.getName())) count.replace(i.getName(), count.get(i.getName()) + 1);
+            else count.put(i.getName(), 1);
         });
 
         Map.Entry<String, Integer> maxEntry = null;
@@ -69,22 +69,21 @@ public class KNN {
         String result = "";
         if (maxEntry != null) {
             accuracy = maxEntry.getValue().doubleValue()/k;
-            switch (maxEntry.getKey()) {
-                case "SETOSA" -> result = "Iris-setosa";
-                case "VERSICOLOR" -> result = "Iris-versicolour";
-                case "VIRGINICA" -> result = "Iris-virginica";
+            for ( String name : data.names() ){
+                if ( maxEntry.getKey().equals(name) ) result = name;
             }
         }
         return result + " accurancy=" + accuracy;
     }
 
     private double distance(Iris x, Iris y) {
-        return Math.sqrt(
-                Math.pow(y.getPetalLength() - x.getPetalLength(), 2.0)
-                        + Math.pow(y.getPetalWidth() - x.getPetalWidth(), 2.0)
-                        + Math.pow(y.getSepalLength() - x.getSepalLength(), 2.0)
-                        + Math.pow(y.getSepalWidth() - x.getSepalWidth(), 2.0)
-        );
+        double result = 0.0;
+        for ( int i = 0; i < x.getValues().size(); i++ ){
+            result += Math.pow(y.getValues().get(i) - x.getValues().get(i), 2.0);
+        }
+        return Math.sqrt(result);
     }
+
+
 
 }

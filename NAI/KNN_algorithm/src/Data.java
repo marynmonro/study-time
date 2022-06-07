@@ -29,14 +29,7 @@ public class Data {
 
             String line;
             while ((line = br.readLine()) != null) {
-                String[] splitLine = line.split(";");
-                list.add(new Iris(
-                        Double.parseDouble(splitLine[0]),
-                        Double.parseDouble(splitLine[1]),
-                        Double.parseDouble(splitLine[2]),
-                        Double.parseDouble(splitLine[3]),
-                        splitLine[4]
-                ));
+                list.add(lineToIris(line));
             }
 
         }catch (IOException e){
@@ -53,30 +46,7 @@ public class Data {
             br = new BufferedReader(new FileReader(new File(trainSetPath)));
         String line;
         while ((line = br.readLine()) != null) {
-            String[] splitLine = line.split(";");
-            switch (splitLine[4]) {
-                case "Iris-setosa":
-                    list.add(new Iris( Double.parseDouble(splitLine[0]),
-                            Double.parseDouble(splitLine[1]),
-                            Double.parseDouble(splitLine[2]),
-                            Double.parseDouble(splitLine[3]),
-                            IrisType.SETOSA));
-                    break;
-                case "Iris-versicolor":
-                    list.add(new Iris( Double.parseDouble(splitLine[0]),
-                            Double.parseDouble(splitLine[1]),
-                            Double.parseDouble(splitLine[2]),
-                            Double.parseDouble(splitLine[3]),
-                            IrisType.VERSICOLOR));
-                    break;
-                case "Iris-virginica":
-                    list.add(new Iris( Double.parseDouble(splitLine[0]),
-                            Double.parseDouble(splitLine[1]),
-                            Double.parseDouble(splitLine[2]),
-                            Double.parseDouble(splitLine[3]),
-                            IrisType.VIRGINICA));
-                    break;
-            }
+            list.add(lineToIris(line));
         }
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,4 +61,27 @@ public class Data {
     public List<Iris> getTrainIrisList() {
         return trainIrisList;
     }
+
+    public Iris lineToIris(String line){
+        String[] splitLine = line.split(";");
+        ArrayList<Double> values = new ArrayList<>();
+        for ( int i = 0; i < splitLine.length; i++ ){
+            if ( i == splitLine.length-1 ) break;
+            values.add(Double.parseDouble(splitLine[i]));
+        }
+
+        return new Iris(
+                values,
+                splitLine[splitLine.length-1]
+        );
+    }
+
+    public ArrayList<String> names(){
+        ArrayList<String> result = new ArrayList<>();
+        for ( Iris iris : getTrainData() ) {
+            if ( !result.contains(iris.getName()) ) result.add(iris.getName());
+        }
+        return result;
+    }
+
 }
