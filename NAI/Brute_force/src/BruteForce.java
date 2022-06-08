@@ -41,73 +41,26 @@ public class BruteForce {
         return arr[itr][k];
     }
 
-
-//    public void implementation(int[]masses, int[]items) {
+//    public void result(){
+//        for ( int i = 0; i < n; i++ ){
+//            int output = 0;
 //
-//        //double res = 0.0;
-//        double previous = 0.0;
-//        int index = 0;
-//        int massa = 0;
-//
-//        for ( int i = 1; i <= n-iteracja; i++ ){
-//            int m = masses[i-1];
-//            //System.out.println(items[i-1] + " " + m);
-//            double res = (double) items[i-1]/(double) m;
-//            System.out.println("Wartosc dla przedmiotu " + i + " = " + res + ", mass: " + m);
-//            if ( res > previous && (m+sum)<=k  ) {
-//                previous = res;
-//                index = i;
-//                massa = m;
+//            for ( int in : indexes ){
+//                if ( i == in ) { output = 1; break; }
 //            }
+//            System.out.print(output);
 //        }
+//        System.out.println();
 //
-//        System.out.println("Iteracja: "+iteracja+", wartosc="+ previous+", index=" +index+" " + "\n");
-//
-//        if ( index !=0 ){
-//            indexes.add(index);
-//            System.out.println(indexes);
-//
-//            ArrayList<Integer> newmasses = new ArrayList<>(masses.length-1);
-//            ArrayList<Integer> newitems = new ArrayList<>(items.length-1);
-//
-//            for ( int i = 1; i<=n-iteracja; i++ ){
-//                if ( i != index ){
-//                    newmasses.add(masses[i-1]);
-//                    newitems.add(items[i-1]);
-//                }
-//            }
-//
-//            iteracja++;
-//            sum += massa;
-//            System.out.println("Sum" + sum + " " + k);
-//            if ( sum <= k && index != 0 ){
-//                implementation(newmasses.stream().mapToInt(i -> i).toArray(), newitems.stream().mapToInt(i -> i).toArray());
-//            }
+//        int sum = 0;
+//        for ( int in : indexes ) {
+//            sum += values[in];
 //        }
+//        System.out.println("\n"+ sum);
+//
 //
 //
 //    }
-
-    public void result(){
-        for ( int i = 0; i < n; i++ ){
-            int output = 0;
-
-            for ( int in : indexes ){
-                if ( i == in ) { output = 1; break; }
-            }
-            System.out.print(output);
-        }
-        System.out.println();
-
-        int sum = 0;
-        for ( int in : indexes ) {
-            sum += values[in];
-        }
-        System.out.println("\n"+ sum);
-
-
-
-    }
 
 
 }
