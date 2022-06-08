@@ -24,7 +24,6 @@ public class Main {
         BruteForce bruteForce = new BruteForce(k, n, masses, items );
 
         System.out.println("- - - - - - - -  \nResult:");
-        bruteForce.result();
 
        // bruteForce.implementation();
 
